@@ -1,4 +1,4 @@
-import 'package:bloc_payload/theme/theme_bloc.dart';
+import 'package:bloc_payload/theme/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ThemeBloc>(
-      create: (context) => ThemeBloc(),
-      child: BlocBuilder<ThemeBloc, ThemeState>(
+    return BlocProvider<ThemeCubit>(
+      create: (context) => ThemeCubit(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return MaterialApp(
             title: 'Event Payload',
@@ -48,9 +48,7 @@ class MyHomePage extends StatelessWidget {
           onPressed: () {
             final int randInt = Random().nextInt(10);
             print('randInt: $randInt');
-            context.read<ThemeBloc>().add(
-                  ChangeThemeEvent(randInt: randInt),
-                );
+            context.read<ThemeCubit>().changeTheme(randInt);
           },
         ),
       ),
