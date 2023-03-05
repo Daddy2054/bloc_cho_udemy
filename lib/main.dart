@@ -1,5 +1,5 @@
-import 'package:cubit2cubit/cubits/color/color_cubit.dart';
-import 'package:cubit2cubit/cubits/counter/counter_cubit.dart';
+import 'blocs/color/color_bloc.dart';
+import 'blocs/counter/counter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,17 +14,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ColorCubit>(
-          create: (context) => ColorCubit(),
+        BlocProvider<ColorBloc>(
+          create: (context) => ColorBloc(),
         ),
-        BlocProvider<CounterCubit>(
-          create: (context) => CounterCubit(
-            colorCubit: context.read<ColorCubit>(),
+        BlocProvider<CounterBloc>(
+          create: (context) => CounterBloc(
+            colorBloc: context.read<ColorBloc>(),
           ),
         ),
       ],
       child: MaterialApp(
-        title: 'cubit2cubit',
+        title: 'bloc2bloc',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -41,7 +41,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.watch<ColorCubit>().state.color,
+      backgroundColor: context.watch<ColorBloc>().state.color,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,12 +52,12 @@ class MyHomePage extends StatelessWidget {
                 style: TextStyle(fontSize: 24.0),
               ),
               onPressed: () {
-                context.read<ColorCubit>().changeColor();
+                context.read<ColorBloc>().add(ChangeColorEvent());
               },
             ),
             SizedBox(height: 20.0),
             Text(
-              '${context.watch<CounterCubit>().state.counter}',
+              '${context.watch<CounterBloc>().state.counter}',
               style: TextStyle(
                 fontSize: 52.0,
                 fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class MyHomePage extends StatelessWidget {
                 style: TextStyle(fontSize: 24.0),
               ),
               onPressed: () {
-                context.read<CounterCubit>().changeCounter();
+                context.read<CounterBloc>().add(ChangeCounterEvent());
               },
             ),
           ],
