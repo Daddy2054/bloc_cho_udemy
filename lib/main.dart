@@ -1,4 +1,4 @@
-import 'package:bloc_cho_udemy/counter/counter_cubit.dart';
+import '/counter/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,22 +8,41 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final CounterCubit _counterCubit = CounterCubit();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Anonymous Route',
+      title: 'Named Route',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BlocProvider<CounterCubit>(
-        create: (context) => CounterCubit(),
-        child: MyHomePage(),
-      ),
+      routes: {
+        '/': (context) => BlocProvider.value(
+              value: _counterCubit,
+              child: MyHomePage(),
+            ),
+        '/counter': (context) => BlocProvider.value(
+              value: _counterCubit,
+              child: ShowMeCounter(),
+            ),
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    _counterCubit.close();
+    super.dispose();
   }
 }
 
@@ -39,15 +58,7 @@ class MyHomePage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) {
-                    return BlocProvider.value(
-                      value: context.read<CounterCubit>(),
-                      child: ShowMeCounter(),
-                    );
-                  }),
-                );
+                Navigator.pushNamed(context, '/counter');
               },
               child: Text(
                 'Show Me Counter',
