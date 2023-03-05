@@ -1,7 +1,7 @@
-import '/counter/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'counter/counter_cubit.dart';
 import 'show_me_counter.dart';
 
 void main() {
@@ -21,20 +21,33 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Named Route',
+      title: 'Generated Route',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: {
-        '/': (context) => BlocProvider.value(
-              value: _counterCubit,
-              child: MyHomePage(),
-            ),
-        '/counter': (context) => BlocProvider.value(
-              value: _counterCubit,
-              child: ShowMeCounter(),
-            ),
+      
+      onGenerateRoute: (RouteSettings settings) {
+        switch ((settings.name)) {
+          case '/':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider.value(
+                value: _counterCubit,
+                child: MyHomePage(),
+              ),
+            );
+          case '/counter':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider.value(
+                value: _counterCubit,
+                child: ShowMeCounter(),
+              ),
+            );
+
+            break;
+          default:
+            return null;
+        }
       },
     );
   }
@@ -58,7 +71,10 @@ class MyHomePage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/counter');
+                Navigator.pushNamed(
+                  context,
+                  '/counter',
+                );
               },
               child: Text(
                 'Show Me Counter',
@@ -74,7 +90,7 @@ class MyHomePage extends StatelessWidget {
                 'Increment Counter',
                 style: TextStyle(fontSize: 20.0),
               ),
-            )
+            ),
           ],
         ),
       ),
