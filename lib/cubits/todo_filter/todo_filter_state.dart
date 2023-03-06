@@ -8,9 +8,9 @@ class TodoFilterState extends Equatable {
     required this.filter,
   });
 
-  factory TodoFilterState.initial() {
-    return TodoFilterState(filter: Filter.all);
-  }
+factory TodoFilterState.initial() {
+  return TodoFilterState(filter: Filter.all);
+} 
 
   @override
   List<Object> get props => [filter];
