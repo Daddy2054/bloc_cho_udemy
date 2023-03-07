@@ -6,7 +6,7 @@ import 'package:todo_cubit/cubits/todo_filter/todo_filter_cubit.dart';
 import 'package:todo_cubit/cubits/todo_list/todo_list_cubit.dart';
 import 'package:todo_cubit/cubits/todo_search/todo_search_cubit.dart';
 
-import 'pages/todos_page.dart';
+import 'pages/todos_page/todos_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ActiveTodoCountCubit>(
           create: (context) => ActiveTodoCountCubit(
+            initialActiveTodoCount: context.read<TodoListCubit>().state.todos.length,
             todoListCubit: BlocProvider.of<TodoListCubit>(context),
           ),
         ),  BlocProvider<FilteredTodosCubit>(
