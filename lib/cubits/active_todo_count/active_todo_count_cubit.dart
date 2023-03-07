@@ -4,8 +4,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:todo_cubit/cubits/todo_list/todo_list_cubit.dart';
-import 'package:todo_cubit/models/todo_model.dart';
+import '/cubits/todo_list/todo_list_cubit.dart';
+import '/models/todo_model.dart';
 
 part 'active_todo_count_state.dart';
 
