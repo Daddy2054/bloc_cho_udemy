@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/cubits.dart';
+import '../../blocs/blocs.dart';
 
 class TodoHeader extends StatelessWidget {
   const TodoHeader({super.key});
@@ -19,7 +19,7 @@ class TodoHeader extends StatelessWidget {
             fontSize: 40,
           ),
         ),
-        BlocBuilder<ActiveTodoCountCubit, ActiveTodoCountState>(
+        BlocBuilder<ActiveTodoCountBloc, ActiveTodoCountState>(
           builder: (context, state) {
             return Text(
               '${state.activeTodoCount} items left',
