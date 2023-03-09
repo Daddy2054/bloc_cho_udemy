@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '/cubits/cubits.dart';
-
 import '/models/todo_model.dart';
 
 part 'filtered_todos_state.dart';

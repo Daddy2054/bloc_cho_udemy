@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:todo_bloc/models/todo_model.dart';
+import '../../models/todo_model.dart';
 
 part 'todo_list_event.dart';
 part 'todo_list_state.dart';
