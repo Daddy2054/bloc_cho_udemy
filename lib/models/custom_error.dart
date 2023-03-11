@@ -4,9 +4,8 @@ import 'package:equatable/equatable.dart';
 class CustomError extends Equatable {
   final String errMsg;
   CustomError({
-    required this.errMsg,
+    this.errMsg = '',
   });
-  
 
   @override
   List<Object> get props => [errMsg];
@@ -14,4 +13,3 @@ class CustomError extends Equatable {
   @override
   bool get stringify => true;
 }
-

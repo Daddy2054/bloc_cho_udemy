@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import '/cubits/weather/weather_cubit.dart';
 import '/repositories/weather_repository.dart';
 import '/services/weather_api_services.dart';
 
@@ -19,12 +21,13 @@ class _HomePageState extends State<HomePage> {
   // }
 
   // _fetchWeather() {
-  //   WeatherRepository(
-  //       weatherApiServices: WeatherApiServices(
-  //     httpClient: http.Client(),
-  //   )).fetchWeather(
-  //     'london',
-  //   );
+  //   // WeatherRepository(
+  //   //     weatherApiServices: WeatherApiServices(
+  //   //   httpClient: http.Client(),
+  //   // ))
+  //   context.read<WeatherCubit>().fetchWeather(
+  //         'london',
+  //       );
   // }
 
   @override
