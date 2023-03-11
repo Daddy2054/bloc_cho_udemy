@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_weather_cubit/widgets/error_dialog.dart';
 
 import '/cubits/weather/weather_cubit.dart';
 import 'search_page.dart';
@@ -59,56 +60,51 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _showWeather() {
-    return BlocConsumer<WeatherCubit, WeatherState>(builder: (
-      context,
-      state,
-    ) {
-      if (state.status == WeatherStatus.initial) {
-        return Center(
-          child: Text(
-            'Select a city',
-            style: TextStyle(
-              fontSize: 20,
+    return BlocConsumer<WeatherCubit, WeatherState>(
+      listener: (context, state) {
+        if (state.status == WeatherStatus.error) {
+          errorDialog(context, state.error.errMsg);
+        }
+      },
+      builder: (
+        context,
+        state,
+      ) {
+        if (state.status == WeatherStatus.initial) {
+          return Center(
+            child: Text(
+              'Select a city',
+              style: TextStyle(
+                fontSize: 20,
+              ),
             ),
-          ),
-        );
-      }
-      if (state.status == WeatherStatus.loading) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      }
+          );
+        }
+        if (state.status == WeatherStatus.loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-      if (state.status == WeatherStatus.error && state.weather.name =='') {
+        if (state.status == WeatherStatus.error && state.weather.name == '') {
+          return Center(
+            child: Text(
+              'Select a city',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          );
+        }
         return Center(
           child: Text(
-            'Select a city',
+            state.weather.name,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
             ),
           ),
         );
-      }
-      return Center(
-        child: Text(
-          state.weather.name,
-          style: TextStyle(
-            fontSize: 18,
-          ),
-        ),
-      );
-      return Container();
-    }, listener: (context, state) {
-      if (state.status == WeatherStatus.error) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(state.error.errMsg),
-            );
-          },
-        );
-      }
-    });
+      },
+    );
   }
 }
