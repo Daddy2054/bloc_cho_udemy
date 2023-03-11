@@ -1,11 +1,8 @@
-import 'dart:io';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:open_weather_cubit/pages/search_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '/cubits/weather/weather_cubit.dart';
-import '/repositories/weather_repository.dart';
-import '/services/weather_api_services.dart';
+import 'search_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -57,9 +54,61 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Center(
-        child: Text('Home'),
-      ),
+      body: _showWeather(),
     );
+  }
+
+  Widget _showWeather() {
+    return BlocConsumer<WeatherCubit, WeatherState>(builder: (
+      context,
+      state,
+    ) {
+      if (state.status == WeatherStatus.initial) {
+        return Center(
+          child: Text(
+            'Select a city',
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        );
+      }
+      if (state.status == WeatherStatus.loading) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+
+      if (state.status == WeatherStatus.error && state.weather.name =='') {
+        return Center(
+          child: Text(
+            'Select a city',
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        );
+      }
+      return Center(
+        child: Text(
+          state.weather.name,
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+      );
+      return Container();
+    }, listener: (context, state) {
+      if (state.status == WeatherStatus.error) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(state.error.errMsg),
+            );
+          },
+        );
+      }
+    });
   }
 }
