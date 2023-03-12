@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import '../constants/constants.dart';
-import '/widgets/error_dialog.dart';
 
 import '/cubits/weather/weather_cubit.dart';
+import '/pages/settings_page.dart';
+import '/widgets/error_dialog.dart';
+import '../constants/constants.dart';
+import '../cubits/temp_settings/temp_settings_cubit.dart';
 import 'search_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -55,6 +57,21 @@ class _HomePageState extends State<HomePage> {
               }
             },
           ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SettingsPage();
+                  },
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.settings,
+            ),
+          ),
         ],
       ),
       body: _showWeather(),
@@ -62,8 +79,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   String showTemperature(double temperature) {
+    final tempUnit = context.watch<TempSettingsCubit>().state.tempUnit;
+
+    if (tempUnit == TempUnit.fahrenheit) {
+      return ((temperature * 9 / 5) + 32).toStringAsFixed(2) + '℉';
+    }
+
     return temperature.toStringAsFixed(2) + '℃';
-    // '℉'; '℃';
   }
 
   Widget showIcon(String icon) {
