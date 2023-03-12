@@ -82,10 +82,11 @@ class _HomePageState extends State<HomePage> {
     final tempUnit = context.watch<TempSettingsCubit>().state.tempUnit;
 
     if (tempUnit == TempUnit.fahrenheit) {
-      return ((temperature * 9 / 5) + 32).toStringAsFixed(2) + '℉';
+      return '${((temperature * 9 / 5) + 32.0).toStringAsFixed(2)} ℉';
     }
 
-    return temperature.toStringAsFixed(2) + '℃';
+//    return temperature.toStringAsFixed(2) + '℃';
+    return '${temperature.toStringAsFixed(2)} ℃';
   }
 
   Widget showIcon(String icon) {

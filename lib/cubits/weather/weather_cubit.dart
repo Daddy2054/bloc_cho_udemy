@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:open_weather_cubit/models/custom_error.dart';
-import 'package:open_weather_cubit/models/weather.dart';
-import 'package:open_weather_cubit/repositories/weather_repository.dart';
+import '/models/custom_error.dart';
+import '/models/weather.dart';
+import '/repositories/weather_repository.dart';
 
 part 'weather_state.dart';
 
@@ -23,13 +23,13 @@ class WeatherCubit extends Cubit<WeatherState> {
         weather: weather,
       ));
 
-      print('state: $state');
+      print('stateOk: $state');
     } on CustomError catch (e) {
       emit(state.copyWith(
         status: WeatherStatus.error,
         error: e,
       ));
-      print('state: $state');
+      print('stateErr: $state');
     }
   }
 }
