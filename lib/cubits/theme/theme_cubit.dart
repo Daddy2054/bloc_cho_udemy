@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:open_weather_cubit/constants/constants.dart';
+import '/constants/constants.dart';
 
 import '/cubits/weather/weather_cubit.dart';
 

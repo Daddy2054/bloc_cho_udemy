@@ -3,7 +3,6 @@ import '/exceptions/weather_exception.dart';
 import '/models/custom_error.dart';
 import '/models/direct_geocoding.dart';
 import '/models/weather.dart';
-
 import '/services/weather_api_services.dart';
 
 class WeatherRepository {

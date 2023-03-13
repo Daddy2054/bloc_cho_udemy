@@ -1,14 +1,12 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:open_weather_cubit/cubits/temp_settings/temp_settings_cubit.dart';
-import 'package:open_weather_cubit/cubits/theme/theme_cubit.dart';
-import 'package:open_weather_cubit/cubits/weather/weather_cubit.dart';
+import 'package:http/http.dart' as http;
+
+import 'blocs/blocs.dart';
+import 'pages/home_page.dart';
 import 'repositories/weather_repository.dart';
 import 'services/weather_api_services.dart';
-
-import 'pages/home_page.dart';
 
 void main() async {
   await dotenv.load(fileName: 'assets/.env');
@@ -28,27 +26,27 @@ class MyApp extends StatelessWidget {
       ),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<WeatherCubit>(
-            create: (context) => WeatherCubit(
+          BlocProvider<WeatherBloc>(
+            create: (context) => WeatherBloc(
               weatherRepository: context.read<WeatherRepository>(),
             ),
           ),
-          BlocProvider<TempSettingsCubit>(
-            create: (context) => TempSettingsCubit(),
+          BlocProvider<TempSettingsBloc>(
+            create: (context) => TempSettingsBloc(),
           ),
-          BlocProvider<ThemeCubit>(
-            create: (context) => ThemeCubit(
-              weatherCubit: context.read<WeatherCubit>(),
+          BlocProvider<ThemeBloc>(
+            create: (context) => ThemeBloc(
+              weatherBloc: context.read<WeatherBloc>(),
             ),
           ),
         ],
-        child: BlocBuilder<ThemeCubit, ThemeState>(
+        child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, state) {
             return MaterialApp(
               title: 'Weather App',
               debugShowCheckedModeBanner: false,
               theme:
-                  context.watch<ThemeCubit>().state.appTheme == AppTheme.light
+                  context.watch<ThemeBloc>().state.appTheme == AppTheme.light
                       ? ThemeData.light()
                       : ThemeData.dark(),
               home: const HomePage(),
