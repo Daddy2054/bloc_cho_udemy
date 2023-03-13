@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String? _city;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +37,9 @@ class _HomePageState extends State<HomePage> {
               );
               print('city: $_city ');
               if (_city != null) {
-                context.read<WeatherBloc>().add(FetchWeatherEvent(city:_city!));
+                context
+                    .read<WeatherBloc>()
+                    .add(FetchWeatherEvent(city: _city!));
               }
             },
           ),
@@ -64,7 +66,8 @@ class _HomePageState extends State<HomePage> {
 
   String showTemperature(double temperature) {
     final tempUnit = context.watch<TempSettingsBloc>().state.tempUnit;
-
+   //print(
+     //   'celsius: ${temperature.toStringAsFixed(2)}, fahrenheit: ${((temperature * 9 / 5) + 32).toStringAsFixed(2)}');
     if (tempUnit == TempUnit.fahrenheit) {
       return ((temperature * 9 / 5) + 32).toStringAsFixed(2) + '℉';
     }

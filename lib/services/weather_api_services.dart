@@ -60,9 +60,9 @@ class WeatherApiServices {
         throw Exception(httpErrorHandler(response));
       }
       final weatherJson = json.decode(response.body);
-
+     //print(weatherJson);
       final Weather weather = Weather.fromJson(weatherJson);
-
+ 
       return weather;
     } catch (e) {
       rethrow;
