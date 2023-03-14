@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fb_auth_bloc/blocs/auth/auth_bloc.dart';
+import '/repository/auth_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '/pages/home_page.dart';
 import '/pages/signin_page.dart';
 import '/pages/signup_page.dart';
@@ -19,17 +24,36 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Firebas Auth',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>(
+          create: (context) => AuthRepository(
+            firebaseFirestore: FirebaseFirestore.instance,
+            firebaseAuth: FirebaseAuth.instance,
+          ),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Firebas Auth',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: SplashPage(),
+          routes: {
+            SignupPage.routeName: (context) => SignupPage(),
+            SigninPage.routeName: (context) => SigninPage(),
+            HomePage.routeName: (context) => HomePage(),
+          },
+        ),
       ),
-      home: SplashPage(),
-      routes: {
-        SignupPage.routeName: (context) => SignupPage(),
-        SigninPage.routeName: (context) => SigninPage(),
-        HomePage.routeName: (context) => HomePage(),
-      },
     );
   }
 }
