@@ -11,6 +11,7 @@ import '/pages/signin_page.dart';
 import '/pages/signup_page.dart';
 import '/pages/splash_page.dart';
 import '/repository/auth_repository.dart';
+import 'blocs/signup/signup_cubit.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -47,7 +48,11 @@ class MyApp extends StatelessWidget {
               authRepository: context.read<AuthRepository>(),
             ),
           ),
-
+                  BlocProvider<SignupCubit>(
+            create: (context) => SignupCubit(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           title: 'Firebase Auth',
