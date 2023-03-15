@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '/blocs/auth/auth_bloc.dart';
 import '/blocs/signin/signin_cubit.dart';
-import '/repository/auth_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '/pages/home_page.dart';
 import '/pages/signin_page.dart';
 import '/pages/signup_page.dart';
 import '/pages/splash_page.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+import '/repository/auth_repository.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
 
         ],
         child: MaterialApp(
-          title: 'Firebas Auth',
+          title: 'Firebase Auth',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
